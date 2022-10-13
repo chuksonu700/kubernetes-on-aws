@@ -1,28 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udacity-kubb
+  name: chuks-app
   labels:
     app: chuks-app
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: chuks-app
-  replicas: 2
   template:
     metadata:
       labels:
         app: chuks-app
     spec:
       containers:
-       — name: simple-node-travis
-         image: chuksonu/simple-node-travis
-         ports:
-           — containerPort: 80
-      livenessProbe:
-        httpGet:
-          path: /health
-          port: 8080
-        initialDelaySeconds: 3
-        periodSeconds: 3
-        
+      - name: simple-node-travis
+        image: chuksonu/simple-node-travis
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: test/actuator/health
+            port: 9001
+          initialDelaySeconds: 3
+          periodSeconds: 3
